@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>Index</title>
+		<meta charset="utf-8">
+  		<meta name="viewport" content="width=device-width, initial-scale=1">
+  		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.min.js"></script>
+  		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.bundle.js"></script>
+  		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.bundle.min.js"></script>
+  		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.js"></script>
+  		<script src="http://canvasjs.com/assets/script/canvasjs.min.js" type="text/javascript"></script>
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+      <script src="https://code.highcharts.com/modules/exporting.js"></script>
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> -->
+      <!-- <script type="text/javascript" src="https://github.com/hekigan/is-loading/blob/master/jquery.isloading.min.js"></script> -->
+  		<style>
+
+  			html,body {
+        		padding:0;
+        		margin:0;
+        		height:100%;
+        		min-height:100%;
+      		}
+
+			.quad{
+				width:50%;
+				height:140%;
+				float:right;
+				border-radius: 5px;
+				border:thin black;
+				/*margin:20 20 20 20px;*/
+
+			}
+			.quad_r{
+				width: 50%;
+				height:140%;
+				float:left;
+				border-radius: 5px;
+				border:thin black;
+				border-spacing: 5px;
+				/*margin: 20 20 20 20px;*/
+
+
+			}
+			.line{
+				height:50%;
+				width:100%;
+			}
+  
+
+			.equal, .equal > div[class*='col-'] {  
+      			display: -webkit-box;
+      			display: -moz-box;
+      			display: -ms-flexbox;
+      			display: -webkit-flex;
+      			display: flex;
+      			flex:1 0 auto;
+      			margin: 20px 20px 20px 20px;
+  			}
+
+			.half{
+				width:100%;
+				height:100%;
+				float:left;
+				border-radius: 5px;
+				border:thin black;
+				border-spacing: 5px;
+			}
+			.full {
+				width:100%;
+				height:100%;
+				/*border:solid black;*/
+			}
+
+      table{
+   overflow-y:scroll;
+}
+
+
+      .loader {
+        position: relative;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 100px;
+  height: 100px;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  margin-left:300px;
+  margin-right:300px;
+  margin-bottom:160px;
+  margin-top:155px;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+  		</style>
+
+  		<!-- Javascript for all the call to the server and event handling -->
+
+  		<script type="text/javascript">
+		// Function to send get the data from server using ajax request.
+    var data_day_sign = [];
+    var data_day_malw = [];
+    var data_day_inf = [];
+    var data_week_sign = []
+    var data_week_malw = [];
+    var data_week_inf = [];
+    var data_month_sign = [];
+    var data_month_malw = [];
+    var data_month_inf = [];
+
+    function has(data_array, data) {
+      for(var i = 0; i < data_array.length; i++) 
+        if (data_array[i].suite_id == data.suite_id) 
+          return true;
+      return false;
+    }
+
+    function return_data(data_array, suite_id) {
+      for(var i = 0; i < data_array.length; i++) {
+        if (data_array[i].suite_id == suite_id) {
+          return data_array[i].data;
+        }
+      }
+      return null;
+    }
+
+    function make_data_day_signature(data) {
+      if (!has(data_day_sign, data))
+        data_day_sign.push(data);
+      console.log("starts make_data_day_signature");
+      console.log(data_day_sign)
+      console.log(data);
+      console.log("ends make_data_day_signature");
+    }
+    function make_data_day_malware(data) {
+      if (!has(data_day_malw, data))
+        data_day_malw.push(data);
+      console.log("starts make_data_day_malware");
+      console.log(data_day_malw)
+      console.log(data);
+      console.log("ends make_data_day_malware");
+    }
+    function make_data_day_infection(data) {
+      if (!has(data_day_inf, data))
+        data_day_inf.push(data);
+      console.log("starts make_data_day_infection");
+      console.log(data_day_inf)
+      console.log(data);
+      console.log("ends make_data_day_infection");
+    }
+
+
+    function make_data_week_signature(data) {
+      if (!has(data_week_sign, data))
+        data_week_sign.push(data);
+      console.log("starts make_data_week_signature");
+      console.log(data_week_sign)
+      console.log(data);
+      console.log("ends make_data_week_signature");
+    }
+    function make_data_week_malware(data) {
+      if (!has(data_week_malw, data))
+        data_week_malw.push(data);
+      console.log("starts make_week_day_malware");
+      console.log(data_week_malw)
+      console.log(data);
+      console.log("ends make_data_week_malware");
+    }
+    function make_data_week_infection(data) {
+      if (!has(data_week_inf, data))
+        data_week_inf.push(data);
+      console.log("starts make_data_week_infection");
+      console.log(data_week_inf)
+      console.log(data);
+      console.log("ends make_data_week_infection");
+    }
+
+
+    function make_data_month_signature(data) {
+      if (!has(data_month_sign, data))
+        data_month_sign.push(data);
+      console.log("starts make_data_month_signature");
+      console.log(data_month_sign)
+      console.log(data);
+      console.log("ends make_data_month_signature");
+    }
+    function make_data_month_malware(data) {
+      if (!has(data_month_malw))
+        data_month_malw.push(data);
+      console.log("starts make_data_month_malware");
+      console.log(data_month_malw)
+      console.log(data);
+      console.log("ends make_data_day_malware");
+    }
+    function make_data_month_infection(data) {
+      if (!has(data_month_inf, data))
+        data_month_inf.push(data);
+      console.log("starts make_data_month_infection");
+      console.log(data_month_inf)
+      console.log(data);
+      console.log("ends make_data_month_infection");
+    }
+
+
+
+        function get_data_by_id() {
+            var id = document.getElementById("suite_id").value;
+            console.log(id);
+            // alert(id);
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "http://localhost:8147/?suite_id=" + id, true);
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    data = xmlhttp.responseText;
+                    data = JSON.parse(data);
+                    dataset = data.id[0];
+                    // console.log(dataset.suite_id);
+                    // well = document.getElementsByClassName("well");
+                    // well[0].innerHTML = "Suite-ID       : " + dataset.suite_id;
+                    // well[1].innerHTML = "DESCRIPTION    : " + dataset.description.split(" ")[0];
+                    // well[2].innerHTML = "Product Name   : " + dataset.product_name;
+                    // well[3].innerHTML = "Host Name      : " + dataset.hostname;
+                    // // tester, duration, status, result, detection_rate
+                    // well[4].innerHTML = "Tester         : " + dataset.tester;
+                    // well[5].innerHTML = "Duration       : " + dataset.duration;
+                    // well[6].innerHTML = "status         : " + dataset.status;
+                    // well[7].innerHTML = "Detection rate : " + dataset.detection_rate;
+                    // well[8].innerHTML = "Result         : " + dataset.result;
+                    
+                  }
+            };
+            xmlhttp.send();
+        }
+
+        function get_data_by_day(_type) {
+          var compare_id = document.getElementById("compare_id").value;
+          var checkbox = document.getElementById("check_box").checked;
+          if ((Boolean(compare_id)) && Boolean(checkbox)){
+            compare_day(_type);
+            return;
+          }
+          var id = document.getElementById("suite_id").value;
+          var xmlhttp = new XMLHttpRequest();
+          // alert("In get_data_by_day");
+          if (_type == "malware") {
+            // alert("inside if statement");
+            // console.log(_type);
+            loader_start("bar", "spin");
+            if (has(data_day_malw, {'suite_id' : id})) {
+              var data = return_data(data_day_malw, id);
+              loader_stop("spin", "bar");
+              document.getElementById("filter_malware").innerHTML = "Filter By Last Day";
+              draw_graph_bar(data.malware, "bar", "bar", "Malware Files");
+              return;
+            }
+            document.getElementById("filter_malware").innerHTML = "Filter By Last Day";
+            xmlhttp.open("GET", "http://localhost:8147/?suite_id=" + id + "&malware=day");
+            xmlhttp.onreadystatechange = function(){
+              if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+              data = xmlhttp.responseText;
+              data = JSON.parse(data);
+              // console.log(data.malware[0]);
+              // console.log(data);
+              // for(var i = 0; i < data.malware.length; i++) {
+              //   console.log(data.malware[i].type + " " + data.malware[i].total);
+              // }
+              loader_stop("spin", "bar");
+              if (Boolean(data)){
+              // draw_pie_chart(data.malware);
+              make_data_day_malware({'suite_id' : id, 'data' : data});
+              draw_graph_bar(data.malware, "bar", "bar", "Malware Files");
+            }
+            }
+            };
+            xmlhttp.send();
+          }
+          else if (_type === "signature") {
+            loader_start("pie", "spin_pie");
+            if(has(data_day_sign, {"suite_id" : id})) {
+              var data = return_data(data_day_sign, id);
+              loader_stop("spin_pie", "pie");
+              document.getElementById("filter_signature").innerHTML = "Filter By Last Day";
+              draw_graph_pie(data.signature, "pie", "pie", "Top 5 Signatures");
+              return;
+            }
+            document.getElementById("filter_signature").innerHTML = "Filter By Last Day";
+            xmlhttp.open("GET", "http://localhost:8147/?suite_id=" + id + "&signature=day");
+            xmlhttp.onreadystatechange = function(){
+              if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+              data = xmlhttp.responseText;
+              data = JSON.parse(data);
+              // console.log(data.signature);
+              // draw_bar_chart(data.signature);
+              loader_stop("spin_pie", "pie");
+              if(Boolean(data)){
+              make_data_day_signature({'suite_id' : id, 'data' : data});
+              draw_graph_pie(data.signature, "pie", "pie", "Top 5 Signatures");
+            }
+            }
+            else {
+              // spin("pie");
+            }
+            };
+            xmlhttp.send();
+          }
+          else if (_type === "infection"){
+            loader_start("pie_infection", "spin_pie_infection");
+            if(has(data_day_inf, {"suite_id" : id})) {
+              var data = return_data(data_day_inf, id);
+              loader_stop("spin_pie_infection", "pie_infection");
+              document.getElementById("filter_infection").innerHTML = "Filter By Last Day";
+              draw_graph_pie(data.infection, "pie_infection", "pie_infection", "Infection Types");
+              return;
+            }
+            document.getElementById("filter_infection").innerHTML = "Filter By Last Day";
+            xmlhttp.open("GET", "http://localhost:8147/?suite_id=" + id + "&infection=day");
+            xmlhttp.onreadystatechange = function(){
+              if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+              data = xmlhttp.responseText;
+              data = JSON.parse(data);
+              console.log(data);
+              loader_stop("spin_pie_infection", "pie_infection");
+              if (Boolean(data)){
+              // draw_bar_chart(data.signature);
+              make_data_day_infection({'suite_id' : id, 'data' : data})
+              console.log("data sent to make global");
+              draw_graph_pie(data.infection, "pie_infection", "pie_infection", "Infection Types");
+            }
+            }
+            };
+            xmlhttp.send();
+          }
+
+        }
+
+        function get_data_by_week(_type) {
+          var compare_id = document.getElementById("compare_id").value;
+          var checkbox = document.getElementById("check_box").checked;
+          if ((Boolean(compare_id)) && Boolean(checkbox)){
+            compare_week(_type);
+            return;
+          }
+          var id = document.getElementById("suite_id").value;
+          var xmlhttp = new XMLHttpRequest();
+          if (_type === "malware") {
+            // spin("bar");
+            loader_start("bar", "spin");
+            if (has(data_week_malw, {"suite_id" : id})) {
+              var data = return_data(data_week_malw, id);
+              loader_stop("spin", "bar");
+              document.getElementById("filter_malware").innerHTML = "Filter By Last Week";
+              draw_graph_bar(data.malware, "bar", "bar", "Malware Files");
+              return;
+            }
+            document.getElementById("filter_malware").innerHTML = "Filter By Last Week";
+            xmlhttp.open("GET", "http://localhost:8147/?suite_id=" + id + "&malware=week");
+            xmlhttp.onreadystatechange = function(){
+              if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+              data = xmlhttp.responseText;
+              data = JSON.parse(data);
+              loader_stop("spin","bar");
+              // console.log(data);
+              // draw_pie_chart(data.malware);
+              if(Boolean(data)){
+                make_data_week_malware({'suite_id': id, 'data': data});
+                draw_graph_bar(data.malware, "bar", "bar", "Malware Files")
+              }
+            }
+            };
+            xmlhttp.send();
+          }
+          else if (_type === "signature") {
+            // spin("pie");
+            loader_start("pie", "spin_pie");
+            if (has(data_week_sign, {"suite_id" : id})) {
+              var data = return_data(data_week_sign, id);
+              loader_stop("spin_pie", "pie");
+              document.getElementById("filter_signature").innerHTML = "Filter By Last Week";
+              draw_graph_pie(data.signature, "pie", "pie", "Top 5 Signatures");
+              return ;
+            }
+            document.getElementById("filter_signature").innerHTML = "Filter By Last Week";
+            xmlhttp.open("GET", "http://localhost:8147/?suite_id=" + id + "&signature=week");
+            xmlhttp.onreadystatechange = function(){
+              if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+              data = xmlhttp.responseText;
+              data = JSON.parse(data);
+              // console.log(data.signature);
+              // draw_bar_chart(data.signature);
+              loader_stop("spin_pie", "pie");
+              if(Boolean(data))
+              {
+                make_data_week_signature({'suite_id': id, 'data': data});
+                draw_graph_pie(data.signature, "pie", "pie", "Top 5 Signatures");
+              }
+            }
+            };
+            xmlhttp.send();
+          }
+          else if (_type === "infection"){
+            // spin("pie_infection");
+            loader_start("pie_infection", "spin_pie_infection");
+            if (has(data_week_inf, {"suite_id" : id})) {
+              var data = return_data(data_week_inf, id);
+              loader_stop("spin_pie_infection", "pie_infection");
+              document.getElementById("filter_infection").innerHTML = "Filter By Last Week";
+              draw_graph_pie(data.infection, "pie_infection", "pie_infection", "Infection Types");
+              return;
+            }
+            document.getElementById("filter_infection").innerHTML = "Filter By Last Week";
+            xmlhttp.open("GET", "http://localhost:8147/?suite_id=" + id + "&infection=week");
+            xmlhttp.onreadystatechange = function(){
+              if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+              data = xmlhttp.responseText;
+              data = JSON.parse(data);
+              console.log(data);
+              // console.log(data.signature);
+              loader_stop("spin_pie_infection", "pie_infection");
+              if (Boolean(data))
+              // draw_bar_chart(data.signature);
+              {
+                make_data_week_infection({'suite_id': id, 'data': data});
+                draw_graph_pie(data.infection, "pie_infection", "pie_infection", "Infection Types");
+              }
+            }
+            };
+            xmlhttp.send();
+          }
+        }
+
+        function get_data_by_month(_type) {
+          var compare_id = document.getElementById("compare_id").value;
+          var checkbox = document.getElementById("check_box").checked;
+          if ((Boolean(compare_id)) && Boolean(checkbox)){
+            compare_month(_type);
+            return;
+          }
+          var id = document.getElementById("suite_id").value;
+          var xmlhttp = new XMLHttpRequest();
+          if (_type === "malware") {
+            // loading("bar");
+            // var element = document.getElementById("bar");
+            // var node = document.createElement("div");
+            // node.className="loader";
+            // node.id="spin";
+            // element.parentNode.appendChild(node);
+            // element.parentNode.removeChild(element);
+            loader_start("bar", "spin");
+            if (has(data_month_malw, {"suite_id" : id})) {
+              var data = return_data(data_month_malw, id);
+              loader_stop("spin", "bar");
+              document.getElementById("filter_malware").innerHTML = "Filter By Last Month";
+              draw_graph_bar(data.malware, "bar", "bar", "Malware Files");
+              return;
+            }
+            document.getElementById("filter_malware").innerHTML = "Filter By Last Month";
+            xmlhttp.open("GET", "http://localhost:8147/?suite_id=" + id + "&malware=month");
+            xmlhttp.onreadystatechange = function(){
+              if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+              data = xmlhttp.responseText;
+              data = JSON.parse(data);
+              // console.log(data);
+              // draw_pie_chart(data.malware);
+              // var element = document.getElementById("spin");
+              // var node = document.createElement("div");
+              // node.id="bar";
+              // element.parentNode.appendChild(node);
+              // element.parentNode.removeChild(element);
+              loader_stop("spin", "bar");
+              if(Boolean(data))
+              {
+                make_data_month_malware({'suite_id': id, 'data': data});
+                draw_graph_bar(data.malware, "bar", 'bar', "Malware Files");
+              }
+            }
+            };
+            xmlhttp.send();
+          }
+          else if (_type === "signature") {
+            // spin("pie");
+            // var element = document.getElementById("pie");
+            // var node = document.createElement("div");
+            // node.className="loader";
+            // node.id="spin_pie";
+            // element.parentNode.appendChild(node);
+            // element.parentNode.removeChild(element);
+            loader_start("pie", "spin_pie");
+            if (has(data_month_sign, {"suite_id" : id})) {
+              var data = return_data(data_month_sign, id);
+              loader_stop("spin_pie", "pie");
+              document.getElementById("filter_signature").innerHTML="Filter By Last Month";
+              draw_graph_pie(data.signature, "pie", "pie", "Top 5 Signatures");
+              return;
+            }
+            document.getElementById("filter_signature").innerHTML="Filter By Last Month";
+            xmlhttp.open("GET", "http://localhost:8147/?suite_id=" + id + "&signature=month");
+            xmlhttp.onreadystatechange = function(){
+              if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+              data = xmlhttp.responseText;
+              data = JSON.parse(data);
+              loader_stop("spin_pie", "pie");
+              // console.log(data.signature);
+              // var element = document.getElementById("spin_pie");
+              // var node = document.createElement("div");
+              // node.id="pie";
+              // element.parentNode.appendChild(node);
+              // element.parentNode.removeChild(element);
+              if (Boolean(data))
+              // draw_bar_chart(data.signature);
+              {
+                make_data_month_signature({'suite_id': id, 'data': data});
+                draw_graph_pie(data.signature, "pie", "pie", "Top 5 Signatures");
+              }
+            }
+            };
+            xmlhttp.send();
+          }
+          else if (_type === "infection"){
+            // spin("pie_infection");
+            // var element = document.getElementById("pie_infection");
+            // var node = document.createElement("div");
+            // node.className="loader";
+            // node.id="spin_pie_infection";
+            // element.parentNode.appendChild(node);
+            loader_start("pie_infection", "spin_pie_infection");
+            if (has(data_month_inf, {"suite_id" : id})) {
+              var data = return_data(data_month_inf, id);
+              loader_stop("spin_pie_infection", "pie_infection");
+              document.getElementById("filter_infection").innerHTML = "Filter By Last Month";
+              draw_graph_pie(data.infection, "pie_infection", "pie_infection", "Infection Type");
+              return;
+            }
+            // element.parentNode.removeChild(element);
+            document.getElementById("filter_infection").innerHTML = "Filter By Last Month";
+            xmlhttp.open("GET", "http://localhost:8147/?suite_id=" + id + "&infection=month");
+            xmlhttp.onreadystatechange = function(){
+              if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+              data = xmlhttp.responseText;
+              data = JSON.parse(data);
+              console.log(data);
+              loader_stop("spin_pie_infection", "pie_infection");
+              // console.log(data.signature);
+              // var element = document.getElementById("spin_pie_infection");
+              // var node = document.createElement("div");
+              // node.id="pie_infection";
+              // element.parentNode.appendChild(node);
+              // element.parentNode.removeChild(element);
+              if (Boolean(data))
+              // draw_bar_chart(data.signature);
+              {
+                make_data_month_infection({'suite_id': id, 'data': data});
+                draw_graph_pie(data.infection, "pie_infection", "pie_infection", "Infection Type");
+              }
+            }
+            };
+            xmlhttp.send();
+          }
+        }
+
+        function get_related_ids() {
+          var xmlhttp = new XMLHttpRequest();
+          xmlhttp.open("GET", "http://localhost:8147/?ids=true");
+          console.log("request sent ids.");
+          xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+              data = JSON.parse(xmlhttp.responseText).related_ids;
+              console.log(data[0]);
+              // console.log(data.related_ids[0]);
+              // draw_table(data.related_ids);
+              var element = document.getElementById("table").rows;
+              console.log(element);
+              for (var i = 0; i < data.length; i++) {
+                element[i+1].innerHTML = "<tr id='"+data[i].suite_id+"'><td>"+data[i].suite_id+"</td><td>"+data[i].hostname+"</td><td>"+data[i].product_release+"</td><td>"+data[i].sec_version+"</td></tr>";
+              }
+              // document.getElementById(String(document.getElementById("suite_id").value)).className="success";
+
+            }
+          }
+          xmlhttp.send();
+        }
+
+		// The function Ends here.
+
+
+        function loader_start(_id, new_id) {
+          var element = document.getElementById(_id);
+          var node = document.createElement("div");
+          node.className="loader";
+          node.id=new_id;
+          element.parentNode.appendChild(node);
+          element.parentNode.removeChild(element);
+        }
+
+
+        function loader_stop(_id, new_id) {
+          var element = document.getElementById(_id);
+          var node = document.createElement("div");
+          node.id=new_id;
+          element.parentNode.appendChild(node);
+          element.parentNode.removeChild(element);
+        }
+
+            function draw_graph_pie(_data, _type, id, _title) {
+              var __data = [];
+              for(var i = 0; i < _data.length; i++) {
+                if (_type == "pie") __data.push({
+                  "name" : _data[i].signature_name,
+                  "y" : _data[i].total
+                });
+                else __data.push({
+                  "name" : _data[i].inf_type,
+                  "y" : _data[i].total
+                });
+              }
+              $(function(){
+                $("#"+id).highcharts({
+                  chart : {
+                    type : 'pie',
+                    width : 700,
+                    height : 415
+                  },
+                  title : {
+                    text : _title
+                  },
+                  plotOptions : {
+                    series : {
+                      dataLabels : {
+                        enabled : true
+                      }
+                    }
+                  },
+                  series : [{
+                    name : "Total",
+                    data : __data
+                  }]
+                })
+              });
+            }
+
+
+      function draw_graph_bar(_data, _type, id) {
+        var _label = [];
+        var __data = [];
+        for(var i = 0; i < 15; i++) {
+          _label.push(_data[i].type);
+          __data.push(_data[i].total);
+        }
+
+        $(function(){
+          // console.log("Inside $functin : " + _label);
+          $("#bar").highcharts({
+            chart : {
+              type : "column",
+              width : 700,
+              height : 415
+            },
+            title : {
+              text : "Top 15 Malware Files"
+            },
+            xAxis : {
+              categories : _label,
+              crosshair : true,
+              title : {text : "Type of File"}
+            },
+            yAxis : {
+              min : 0,
+              title : {
+                text : "Number of Files"
+              }
+            },
+            plotOptions : {
+              column : {
+                pointPadding : 0.0,
+                borderWidth : 0
+              }
+            },
+            series : [{
+              name : "Number of Files",
+              data : __data
+            }]
+          });
+        });
+      }
+
+		// The function ends here.
+
+		// The function to get the data within one day.
+
+			function display_data_onload() {
+        document.getElementById("suite_id").value = 110;
+				get_data_by_id();
+        get_data_by_day('signature');
+        get_data_by_day('infection');
+        get_data_by_day('malware');
+        get_related_ids();
+
+        document.getElementById("compare_ids").onclick = function() {
+      console.log("button clicked");
+      var compare_id = document.getElementById("compare_id").value;
+      console.log("compare_id ", compare_id);
+      console.log("global infection data ", data_day_inf);
+      console.log(data_day_sign);
+      console.log(data_day_malw);
+      var checkbox = document.getElementById("check_box").checked;
+      if (!Boolean(compare_id) || !checkbox) return;
+
+      var sign_value = document.getElementById("filter_signature").innerHTML;
+      if (sign_value === "Filter By Last Day") {
+        // sign_value.innerHTML = 'Filter By Last Day';
+        compare_day("signature");
+      }
+      else if (sign_value === "Filter By Last Week") {
+        // sign_value.innerHTML = 'Filter By Last Week';
+        compare_week("signature");
+      }
+      else if (sign_value === "Filter By Last Month"){
+        // sign_value.innerHTML = "Filter By Last Month";
+        compare_week("signature");
+      }
+
+      var inf_value = document.getElementById("filter_infection").innerHTML;
+      if (inf_value === "Filter By Last Day") {
+        // inf_value.innerHTML = "Filter By Last Day";
+        compare_day("infection");
+      }
+      else if (inf_value === "Filter By Last Week") {
+        // inf_value.innerHTML = "Filter By Last Week";
+        compare_week("infection");
+      }
+      else if (inf_value === "Filter By Last Month") {
+        // inf_value.innerHTML = "Filter By Last Month";
+        compare_month("infection");
+      }
+
+      var malw_value = document.getElementById("filter_malware").innerHTML;
+      if (malw_value === "Filter By Last Day") {
+        // malw_value.innerHTML = "Filter By Last Day";
+        compare_day("malware");
+      }
+      else if (malw_value === "Filter By Last Week") {
+        // malw_value.innerHTML = "Filter By Last Week";
+        compare_week("malware");
+      }
+      else if (malw_value === "Filter By Last Month") {
+        // malw_value.innerHTML = "Filter By Last Month";
+        compare_month("malware");
+      }
+    };
+        
+			}
+
+      function display_data_submit(){
+        get_data_by_id();
+        get_data_by_day('signature');
+        get_data_by_day('infection');
+        get_data_by_day('malware');
+        get_related_ids();
+        
+      }
+
+      function filter_data_by_week() {
+        get_data_by_week('signature');
+        get_data_by_week('infection');
+        get_data_by_week('malware');
+        
+      }
+      function filter_data_by_month() {
+        get_data_by_month('signature');
+        get_data_by_month('infection');
+        get_data_by_month('malware');
+        
+      }
+		// The function ends here.
+
+
+
+
+    function compare_day(_type) {
+      var suite_id = document.getElementById("suite_id").value;
+      var compare_id = document.getElementById("compare_id").value;
+      if (_type == "signature") {
+        loader_start("pie", "spin_pie");
+        document.getElementById("filter_signature").innerHTML = "Filter By Last Day";
+        if (has(data_day_sign, {"suite_id" : compare_id})) {
+          if (!has(data_day_sign, {"suite_id" : suite_id})) {
+            load_data('signature', 'day', suite_id);
+          }
+          console.log("whao...");
+          var data1 = return_data(data_day_sign, compare_id);
+          var data = return_data(data_day_sign, suite_id);
+          loader_stop("spin_pie", "pie");
+          update_pie({'suite_id': suite_id, 'data' : data.signature}, {'suite_id' : compare_id, 'data' : data1.signature}, "signature");
+          return;
+        }
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "http://localhost:8147/?suite_id="+compare_id + "&signature=day", true);
+        xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            document.getElementById("filter_signature").innerHTML = "Filter By Last Day"
+            var data1 = JSON.parse(xmlhttp.responseText);
+            if (!has(data_day_sign, {"suite_id" : suite_id})) {
+              load_data('signature', 'day', 'suite_id');
+            }
+            var data = return_data(data_day_sign, suite_id);
+            make_data_day_signature({'suite_id' : compare_id, 'data' : data1});
+            data1 = return_data(data_day_sign, compare_id);
+            loader_stop("spin_pie", "pie");
+            update_pie({'suite_id': suite_id, 'data' : data.signature}, {'suite_id' : compare_id, 'data' : data1.signature}, "signature");
+          }
+        }
+        xmlhttp.send();
+      }
+      else if (_type == "infection") {
+        loader_start("pie_infection", "spin_pie_infection");
+        document.getElementById("filter_infection").innerHTML = "Filter By Last Day";
+        if (has(data_day_inf, {"suite_id" : compare_id})) {
+          if(!has(data_day_inf, {"suite_id" : suite_id})) {
+            load_data('infection', 'day', suite_id);
+          }
+          console.log("Whaooo... in _type == 'infection'");
+          var data1 = return_data(data_day_inf, compare_id);
+          var data = return_data(data_day_inf, suite_id);
+          loader_stop("spin_pie_infection", "pie_infection");
+          update_pie({'suite_id' : suite_id, 'data' : data.infection}, {'suite_id' : compare_id, 'data' : data1.infection}, "infection");
+          return;
+        }
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "http://localhost:8147/?suite_id="+compare_id + "&infection=day", true);
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            document.getElementById("filter_infection").innerHTML = "Filter By Last Day";
+            var data = JSON.parse(xmlhttp.responseText);
+            if(!has(data_day_inf, {'suite_id' : suite_id})) {
+              load_data('infection', 'day', suite_id);
+            }
+            var data1 = return_data(data_day_inf, suite_id);
+            make_data_day_infection({'suite_id' : compare_id, 'data' : data});
+            loader_stop("spin_pie_infection", "pie_infection");
+            data = return_data(data_day_inf, compare_id);
+            update_pie({"suite_id" : suite_id, 'data' : data.infection}, {'suite_id': compare_id, 'data' : data1.infection}, "infection");
+          }
+        }
+        xmlhttp.send();
+      }
+      else if (_type == "malware") {
+        loader_start("bar", "spin");
+        document.getElementById("filter_malware").innerHTML = "Filter By Last Day";
+        if (has(data_day_malw, {"suite_id" : compare_id})) {
+          if(!has(data_day_malw, {'suite_id' : suite_id})) {
+            load_data('malware', 'day', suite_id);
+          }
+          console.log("Whaooo... in _type == 'malware'");
+          var data1 = return_data(data_day_malw, compare_id);
+          var data = return_data(data_day_malw, suite_id);
+          loader_stop("spin", "bar");
+          update_pie({"suite_id" : suite_id, "data" : data.malware}, {"suite_id":compare_id, "data" : data1.malware}, 'malware');
+          return;
+        }
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "http://localhost:8147/?suite_id="+compare_id+"&malware=day", true);
+        xmlhttp.onreadystatechange = function() {
+          if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            document.getElementById("filter_malware").innerHTML = "Filter By Last Day";
+            var data = JSON.parse(xmlhttp.responseText);
+            if (!has(data_day_malw, {'suite_id': suite_id})) {
+              load_data('malware', 'day', suite_id);
+            }
+            var data1 = return_data(data_day_malw, suite_id);
+            make_data_day_malware({'suite_id' : compare_id, 'data' : data});
+            loader_stop("spin", "bar");
+            data = return_data(data_day_malw, compare_id);
+            update_pie({"suite_id" : suite_id, "data" : data.malware}, {"suite_id":compare_id, "data" : data1.malware}, 'malware');
+          }
+        }
+        xmlhttp.send();
+      }
+    }
+
+    function compare_week(_type) {
+      var suite_id = document.getElementById("suite_id").value;
+      var compare_id = document.getElementById("compare_id").value;
+      if (_type == "signature") {
+        loader_start("pie", "spin");
+        document.getElementById("filter_signature").innerHTML = "Filter By Last Week";
+        if(has(data_week_sign, {"suite_id" : compare_id})) {
+          if (!has(data_week_sign, {"suite_id" : suite_id})) {
+            load_data('signature', 'week', suite_id);
+          }
+          console.log("Whaaoo... in type == 'malware'");
+          var data1 = return_data(data_week_sign, compare_id);
+          var data = return_data(data_week_sign, suite_id);
+          loader_stop("spin", "pie");
+          update_pie({'suite_id' : suite_id, 'data' : data.signature}, {'suite_id' : compare_id, 'data' : data.signature}, "signature");
+          return;
+        }
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "http://localhost:8147/?suite_id="+compare_id + "&signature=week", true);
+        xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+            if(Boolean(data)){
+              document.getElementById("filter_signature").innerHTML = "Filter By Last Week";
+              console.log("Inside week type == signature.");
+              console.log(data);
+              if (!has(data_week_sign, {'suite_id' : suite_id})) {
+                load_data('signature', 'week', suite_id);
+              }
+              var data1 = return_data(data_week_sign, suite_id);
+              console.log(data1);
+              console.log("Inside week type == signature.");
+              make_data_week_signature({'suite_id' : compare_id, 'data' : data});
+              loader_stop("spin", "pie");
+              data = return_data(data_week_sign, compare_id);
+              update_pie({'suite_id' : suite_id, 'data' : data.signature}, {'suite_id' : compare_id, 'data' : data1.signature}, "signature");
+            }
+          }
+        }
+        xmlhttp.send();
+      }
+      else if (_type == "infection") {
+        loader_start("pie_infection", "spin_pie_infection");
+        document.getElementById("filter_infection").innerHTML = "Filter By Last Week";
+        if (!has(data_week_inf, {'suite_id' : suite_id})) {
+          load_data('infection', 'week', suite_id);
+        }
+        if (has(data_week_inf, {"suite_id" : compare_id})) {
+          var data1 = return_data(data_week_inf, compare_id);
+          var data = return_data(data_week_inf, suite_id);
+          loader_stop("spin_pie_infection", "pie_infection");
+          update_pie({'suite_id' : suite_id, 'data' : data.infection}, {'suite_id' : compare_id, 'data' : data1.infection}, "infection");
+          return;
+        }
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "http://localhost:8147/?suite_id="+compare_id + "&infection=week", true);
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+            if (Boolean(data))
+            {
+              document.getElementById("filter_infection").innerHTML = "Filter By Last Week";
+              var data1 = return_data(data_week_inf, suite_id);
+              console.log("Inside week type == infection.");
+              console.log(data1);
+              console.log(data);
+              console.log("Inside week type == infection");
+              make_data_week_infection({'suite_id' : compare_id, 'data' : data});
+              loader_stop("spin_pie_infection", "pie_infection");
+              data = return_data(data_week_inf, compare_id);
+              update_pie({'suite_id' : suite_id, 'data' : data.infection}, {'suite_id' : compare_id, 'data' : data1.infection}, "infection");
+            }
+          }
+        }
+        xmlhttp.send();
+      }
+      else if (_type == "malware") {
+        loader_start("bar", "spin");
+        if (!has(data_week_malw, {'suite_id' : suite_id})) {
+          load_data('malware', 'week', suite_id);
+        }
+        document.getElementById("filter_malware").innerHTML = "Filter By Last Week";
+        if (has(data_week_malw, {'suite_id' : compare_id})) {
+          var data1 = return_data(data_week_malw, compare_id);
+          var data = return_data(data_week_malw, suite_id);
+          loader_stop("spin", "bar");
+          update_pie({'suite_id' : suite_id, 'data' : data.malware}, {'suite_id' : compare_id , 'data' : data1.malware}, 'malware');
+          return;
+        }
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "http://localhost:8147/?suite_id="+compare_id+"&malware=week", true);
+        xmlhttp.onreadystatechange = function() {
+          if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+            if (Boolean(data)){
+              document.getElementById("filter_malware").innerHTML = "Filter By Last Week";
+              var data1 = return_data(data_week_malw, suite_id);
+              make_data_week_malware({'suite_id' : compare_id, 'data' : data});
+              loader_stop("spin", "bar");
+              data = return_data(data_week_malw, compare_id);
+              update_pie({'suite_id' : suite_id, 'data' : data.malware}, {'suite_id' : compare_id, 'data' : data1.malware}, 'malware');
+            }
+          }
+        }
+        xmlhttp.send();
+      }
+    }
+
+
+    function compare_month(_type) {
+      suite_id = document.getElementById('suite_id').value;
+      compare_id = document.getElementById('compare_id').value;
+      if (_type == "signature") {
+
+        loader_start("pie", "spin_pie");
+        if (!has(data_month_sign, {'suite_id' : suite_id})) {
+          load_data('signature', 'month', suite_id);
+        }
+        document.getElementById("filter_signature").innerHTML = "Filter By Last Month";
+        if (has(data_month_sign, {'suite_id' : compare_id})) {
+          var data = return_data(data_month_sign, suite_id);
+          var data1 = return_data(data_month_sign, compare_id);
+          loader_stop("spin_pie", "pie");
+          update_pie({'suite_id': suite_id, 'data' : data.signature}, {'suite_id' : compare_id, 'data' : data1.signature}, "signature");
+          return;
+        }
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "http://localhost:8147/?suite_id="+compare_id + "&signature=month", true);
+        xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+            if (Boolean(data)){
+              document.getElementById("filter_signature").innerHTML = "Filter By Last Month";
+              console.log("Inside month type == signature.");
+              var data1 = return_data(data_month_sign, suite_id);
+              console.log("data : ", data);
+              console.log("data1 : ", data1);
+              console.log("Inside month type == signature");
+              make_data_month_signature({'suite_id' : compare_id, 'data' : data});
+              loader_stop("spin_pie", "pie");
+              data = return_data(data_month_sign, compare_id);
+              update_pie({'suite_id': suite_id, 'data' : data.signature}, {'suite_id': compare_id, 'data' : data1.signature}, "signature");
+            }
+          }
+        }
+        xmlhttp.send();
+      }
+      else if (_type == "infection") {
+        loader_start("pie_infection", "spin_pie_infection");
+        if (!has(data_month_inf, {'suite_id' : suite_id})) {
+          load_data('infection', 'month', suite_id);
+        }
+        var xmlhttp = new XMLHttpRequest();
+        if (has(data_month_inf, {'suite_id' : compare_id})) {
+          document.getElementById("filter_infection").innerHTML = "Filter By Last Month";
+          var data = return_data(data_month_inf, suite_id);
+          var data1 = return_data(data_month_inf, compare_id);
+          loader_stop("spin_pie_infection", "pie_infection");
+          update_pie({'suite_id' : suite_id, 'data' : data.infection}, {'suite_id': compare_id, 'data' : data1.infection}, 'infection');
+          return;
+        }
+        xmlhttp.open("GET", "http://localhost:8147/?suite_id="+compare_id + "&infection=month", true);
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+            if (Boolean(data)){
+              document.getElementById("filter_infection").innerHTML = "Filter By Last Month";
+              var data1 = return_data(data_month_inf, suite_id);
+              console.log("Inside month type == infection.")
+              console.log("Data : ", data);
+              console.log("Data1 : ", data1);
+              console.log("Inside month type == infection");
+              make_data_month_infection({'suite_id' : compare_id, 'data' : data});
+              loader_stop("spin_pie_infection", "pie_infection");
+              data = return_data(data_month_inf, compare_id);
+              update_pie({'suite_id' : suite_id, 'data' : data.infection}, {'suite_id' : compare_id, 'data' : data1.infection}, "infection");
+            }
+          }
+        }
+        xmlhttp.send();
+      }
+      else if (_type == "malware") {
+        loader_start("bar", "spin");
+        if (!has(data_month_malw, {'suite_id' : suite_id})) {
+          load_data('malware', 'month', suite_id);
+        }
+        document.getElementById("filter_malware").innerHTML = "Filter By Last Month";
+        if (has(data_month_malw, {'suite_id': compare_id})) {
+          var data = return_data(data_month_malw, suite_id);
+          var data1 = return_data(data_month_malw, compare_id);
+          loader_stop("spin", "bar");
+          update_pie({'suite_id' : suite_id, 'data' : data.malware}, {'suite_id' : compare_id, 'data' : data1.malware}, 'malware');
+          return;
+        }
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "http://localhost:8147/?suite_id="+compare_id+"&malware=month", true);
+        xmlhttp.onreadystatechange = function() {
+          if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+            if (Boolean(data)){
+              document.getElementById("filter_malware").innerHTML = "Filter By Last Month";
+              var data1 = return_data(data_month_malw, suite_id);
+              make_data_month_malware({'suite_id' : compare_id, 'data' : data});
+              loader_stop("spin", "bar");
+              data = return_data(data_month_malw, compare_id);
+              update_pie({'suite_id' : suite_id, 'data' : data.malware}, {'suite_id' : compare_id, 'data' : data1.malware}, 'malware');
+            }
+          }
+        }
+        xmlhttp.send();
+      }
+    }
+
+
+    function load_data(_type, _period, suite_id) {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", "http://localhost:8147/?suite_id="+suite_id+"&"+_type+"="+_period, true);
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+          var data = JSON.parse(xmlhttp.responseText);
+          if (Boolean(data)) {
+            if (_type == 'signature') {
+              if (_period == 'day') {
+                make_data_day_signature({'suite_id' : suite_id, 'data' : data});
+              }
+              else if (_period == 'week') {
+                make_data_week_signature({'suite_id' : suite_id, 'data' : data});
+              }
+              else make_data_month_signature({'suite_id' : suite_id, 'data' : data});
+            }
+            else if (_type == 'infection') {
+              if (_period == 'day') {
+                make_data_week_infection({'suite_id' : suite_id, 'data' : data});
+              }
+              else if (_period == 'week') {
+                make_data_week_infection({'suite_id' : suite_id, 'data' : data});
+              }
+              else make_data_month_infection({'suite_id' : suite_id, 'data' : data});
+            }
+            else if (_type == 'malware') {
+              if (_period == 'day') {
+                make_data_day_malware({'suite_id' : suite_id, 'data' : data});
+              }
+              else if (_period == 'week') {
+                make_data_week_malware({'suite_id' : suite_id, 'data' : data});
+              } 
+              else make_data_month_malware({'suite_id' : suite_id, 'data' : data});
+            }
+          }
+        }
+      }
+      xmlhttp.send();
+    }
+
+
+    function update_pie(_data, _data1, _type) {
+      // console.log("In the function update_pie with data : ",data, "data1", data1, "type", _type);
+      var suite_id1 = _data.suite_id;
+      var suite_id2 = _data1.suite_id;
+      _data = _data.data;
+      _data1 = _data1.data;
+      var complete_data1 = [];
+      var complete_data2 = [];
+      var __data = [];
+      var __data1 = [];
+      var categs = [];
+      var id=null;
+      var _title = "";
+      if (_type == 'signature') {
+        id="pie";
+        _title = "Top 5 Signatures";
+        for(var i = 0; i <_data.length; i++) {
+          categs.push(_data[i].signature_name);
+          __data.push(_data[i].total);
+          // complete_data1.push({_data[i].signature_name : _data[i].total});
+        }
+        for(var i = 0; i < _data1.length; i++) {
+          __data1.push(_data1[i].total);
+          // complete_data2.push({_data1[i].signature_name : __data1.total});
+          if (categs.indexOf(_data[i].signature_name) < 0){
+            categs.push(_data1[i].signature_name);
+          }
+        }
+      }
+      else if (_type == 'infection') {
+        _title = "Top 5 Infection Types";
+        id="pie_infection";
+        for(var i = 0; i < _data.length; i++) {
+          __data.push(_data[i].total);
+          categs.push(_data[i].inf_type);
+          // complete_data1.push({_data[i].inf_type : _data[i].total});
+        }
+        for(var i = 0; i < _data1.length; i++) {
+          __data1.push(_data1[i].total);
+          if (categs.indexOf(_data1[i].inf_type) < 0){
+            categs.push(_data1[i].inf_type);
+          }
+          // complete_data2.push({_data1[i].inf_type : _data1[i].total});
+        }
+      }
+      
+      else if (_type == 'malware') {
+        id = 'bar';
+        _title = "Top 15 Malware Files"
+        for(var i = 0; i < 15; i++) {
+          __data.push(_data[i].total);
+          categs.push(_data[i].type);
+          // complete_data1.push({_data[i].type : _data[i].total})
+        }
+        for(var i = 0; i < 15; i++) {
+          __data1.push(_data1[i].total);
+          if (categs.indexOf(_data1[i].type) < 0){
+            categs.push(_data1[i].type);
+          }
+          // complete_data2.push({_data1[i].type : _data1[i].total});
+        }
+      }
+
+      // for(var fields in categs) {
+      //   if (complete_data1[fields] != undefined || complete_data2[fields] != undefined) __data.push(complete_data1[fields]), __data1.push(complete_data2[fields]);
+      //   else categs = categs.filter(function(value){
+      //     return value != fields;
+      //   });
+      // }
+
+      $(function(){
+        $("#"+id).highcharts({
+          chart : {
+            type : 'column',
+            width: 700,
+            height : 415
+          },
+          title : {
+            text : _title
+          },
+          xAxis : {
+            categories : categs,
+            crosshair : true
+          },
+          yAxis : {
+            min : 0,
+            title : {
+              text : "Value"
+            }
+          },
+          series : [
+          {
+            name : 'suite_id : '+ suite_id1,
+            data : __data 
+          },{
+            name : 'suite_id: ' + suite_id2,
+            data : __data1
+          }]
+        });
+      });
+
+    }
+
+    // document.getElementById("check_box").onclick = function() {
+    //   if (this.checked) {
+    //     return;
+    //   }
+    //   else {
+    //     var sign_value = document.getElementById("filter_signature").innerHTML;
+    //     if (sign_value === "Filter By Last Day") {
+    //       get_data_by_day('signature');
+    //     }
+    //     else if (sign_value === "Filter By Last Week") {
+    //       get_data_by_week('signature');
+    //     }
+    //     else {
+    //       get_data_by_month('signature');
+    //     }
+
+    //     var inf_value = document.getElementById("filter_infection").innerHTML;
+    //     if (inf_value == "Filter By Last Day") {
+    //       get_data_by_day('infection');
+    //     }
+    //     else if (inf_value == "Filter By Last Week") {
+    //       get_data_by_week('infection');
+    //     }
+    //     else {
+    //       get_data_by_month('infection');
+    //     }
+    //     var malw_value = document.getElementById("filter_malware").innerHTML;
+    //     if (malw_value == "Filter By Last Day") {
+    //       get_data_by_day('malware');
+    //     }
+    //     else if (malw_value == "Filter By Last Week") {
+    //       get_data_by_week("malware");
+    //     }
+    //     else {
+    //       get_data_by_month("malware");
+    //     }
+    //   }
+    // };
+
+    function show_table(data, id, _type) {
+      console.log("data in show table", data);
+      console.log('id = ', id);
+      table_space = document.getElementById(id);
+      table_head = {
+        'malware'   : ['File Type', 'Totlal'],
+        'signature' : ['Signature Name', 'Total'],
+        'infection' : ['Infection Type', 'Total']
+      }
+
+      _data = {
+        'malware'   : ['type', 'total'],
+        'signature' : ['signature_name', 'total'],
+        'infection' : ['inf_type', 'total']
+      }
+
+      title = {
+        'malware'   : 'Top 15 Malware Files',
+        'signature' : 'Top 5 Signatures',
+        'infection' : 'Top 5 Infection Types'
+      }
+      data = data[_type];
+      // console.log(data[3]);
+      table = "<table class='table table-striped table-bordered table-hover table-condensed' width='700'>";
+
+      // caption ="<caption style='text-align: center; background-color: gray'> Suite ID : " + document.getElementById('suite_id').value + " // " + title[_type] + "</caption>";
+      head = "<tr><th>" + title[_type] + "</th></tr><tr><th>"+table_head[_type][0]+"</th><th>"+table_head[_type][1]+"</th></tr>";
+      rows = "";
+
+      rows += table + head;
+      for(var i = 0; i < (data.length < 15 ? data.length : 15); i++) {
+        row = "<tr><td>"+data[i][_data[_type][0]]+"</td><td>"+data[i][_data[_type][1]]+"</td></tr>";
+        rows += row;
+      }
+
+      rows += "</table>";
+      table_space.innerHTML = '';
+      table_space.innerHTML = rows;
+    }
+
+    function show_table_day(_type) {
+      console.log("type is ", _type);
+      console.log("In show_table_day", _type);
+      var xmlhttp = new XMLHttpRequest();
+      var suite_id = document.getElementById("suite_id").value;
+
+      _open = {
+        'malware'   : xmlhttp.open("GET", 'http://localhost:8147/?suite_id='+suite_id+'&malware=day', true),
+        'signature' : xmlhttp.open('GET', 'http://localhost:8147/?suite_id='+suite_id+'&signature=day',true),
+        'infection' : xmlhttp.open('GET', 'http://localhost:8147/?suite_id='+suite_id+'&infection=day',true)
+      }
+      
+      _has = {
+        'malware'   : has(data_day_malw, {'suite_id' : suite_id}),
+        'infection' : has(data_day_inf, {'suite_id' : suite_id}),
+        'signature' : has(data_day_inf, {'suite_id' : suite_id})
+      }
+
+      _data = {
+        'malware'   : return_data(data_day_malw, suite_id),
+        'infection' : return_data(data_day_inf, suite_id),
+        'signature' : return_data(data_day_sign, suite_id)
+      }
+
+      _store_data = {
+        'malware'   : make_data_day_malware,
+        'signature' : make_data_day_signature,
+        'infection' : make_data_day_infection
+      }
+
+      id = {
+        'malware'   : 'bar',
+        'signature'  : 'pie',
+        'infection'  : 'pie_infection'
+      }
+
+      data = null;
+
+      if (_has[_type]) {
+        data = _data[_type];
+        show_table(data, id[_type], _type);
+      }
+      else {
+        _open[_type];
+        xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            data = JSON.parse(xmlhttp.responseText);
+
+            if (Boolean(data)) {
+              _store_data[_type]({'suite_id' : suite_id, 'data' : data});
+              data = _data[_type];
+              show_table(data, id[_type], _type);
+            }
+          }
+        }
+        xmlhttp.send();
+      }
+    }
+
+    function show_table_week(_type) {
+      console.log("In show_table_week", _type);
+      var xmlhttp = new XMLHttpRequest();
+      var suite_id = document.getElementById("suite_id").value;
+
+      _open = {
+        'malware'   : xmlhttp.open("GET", 'http://localhost:8147/?suite_id='+suite_id+'&malware=week', true),
+        'signature' : xmlhttp.open('GET', 'http://localhost:8147/?suite_id='+suite_id+'&signature=week',true),
+        'infection' : xmlhttp.open('GET', 'http://localhost:8147/?suite_id='+suite_id+'&infection=week',true)
+      }
+      
+      _has = {
+        'malware'   : has(data_week_malw, {'suite_id' : suite_id}),
+        'infection' : has(data_week_inf, {'suite_id' : suite_id}),
+        'signature' : has(data_week_inf, {'suite_id' : suite_id})
+      }
+
+      _data = {
+        'malware'   : return_data(data_week_malw, suite_id),
+        'infection' : return_data(data_week_inf, suite_id),
+        'signature' : return_data(data_week_sign, suite_id)
+      }
+
+      _store_data = {
+        'malware'   : make_data_week_malware,
+        'signature' : make_data_week_signature,
+        'infection' : make_data_week_infection
+      }
+
+      id = {
+        'malware:'   : 'bar',
+        'signature'  : 'pie',
+        'infection'  : 'pie_infection'
+      }
+
+      data = null;
+
+      if (_has[_type]) {
+        data = _data[_type];
+        show_table(data, id[_type], _type);
+      }
+      else {
+        _open[_type];
+        xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            data = JSON.parse(xmlhttp.responseText);
+
+            if (Boolean(data)) {
+              _store_data[_type]({'suite_id' : suite_id, 'data' : data});
+              data = _data[_type];
+              show_table(data, id[_type], _type);
+            }
+          }
+        }
+        xmlhttp.send();
+      }
+    }
+
+    function show_table_month(_type) {
+      console.log("In show_table_month", _type);
+      var xmlhttp = new XMLHttpRequest();
+      var suite_id = document.getElementById("suite_id").value;
+
+      _open = {
+        'malware'   : xmlhttp.open("GET", 'http://localhost:8147/?suite_id='+suite_id+'&malware=month', true),
+        'signature' : xmlhttp.open('GET', 'http://localhost:8147/?suite_id='+suite_id+'&signature=month',true),
+        'infection' : xmlhttp.open('GET', 'http://localhost:8147/?suite_id='+suite_id+'&infection=month',true)
+      }
+      
+      _has = {
+        'malware'   : has(data_month_malw, {'suite_id' : suite_id}),
+        'infection' : has(data_month_inf, {'suite_id' : suite_id}),
+        'signature' : has(data_month_sign, {'suite_id' : suite_id})
+      }
+
+      _data = {
+        'malware'   : return_data(data_month_malw, suite_id),
+        'infection' : return_data(data_month_inf, suite_id),
+        'signature' : return_data(data_month_sign, suite_id)
+      }
+
+      _store_data = {
+        'malware'   : make_data_month_malware,
+        'signature' : make_data_month_signature,
+        'infection' : make_data_month_infection
+      }
+
+      id = {
+        'malware'   : 'bar',
+        'signature'  : 'pie',
+        'infection'  : 'pie_infection'
+      }
+
+      data = null;
+
+      if (_has[_type]) {
+        data = _data[_type];
+        show_table(data, id[_type], _type);
+      }
+      else {
+        _open[_type];
+        xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            data = JSON.parse(xmlhttp.responseText);
+
+            if (Boolean(data)) {
+              _store_data[_type]({'suite_id' : suite_id, 'data' : data});
+              data = _data[_type];
+              show_table(data, id[_type], _type);
+            }
+          }
+        }
+        xmlhttp.send();
+      }
+    }
+
+
+    function compare_table(suite_data, compare_data, id, _type) {
+      var suite_id = document.getElementById('suite_id').value;
+      var compare_id = document.getElementById('compare_id').value;
+      suite_data = suite_data[_type];
+      compare_data = compare_data[_type];
+      console.log('suite_data', suite_data);
+      console.log('compare_data', compare_data);
+
+      table_head = {
+        'malware'   : ['File Type', 'Totlal'],
+        'signature' : ['Signature Name', 'Total'],
+        'infection' : ['Infection Type', 'Total']
+      };
+
+      _data = {
+        'malware'   : ['type', 'total'],
+        'signature' : ['signature_name', 'total'],
+        'infection' : ['inf_type', 'total']
+      };
+
+      title = {
+        'malware'   : 'Top 15 Malware Files',
+        'signature' : 'Top 5 Signatures',
+        'infection' : 'Top 5 Infection Types'
+      };
+
+      table = "<table class='table table-striped table-bordered table-hover table-condensed' width='700px'><tr><td>" + title[_type] + "</td></tr><tr><th>" + table_head[_type][0] + "</th><th>SuiteID : " + suite_id + "</th><th>SuiteID : " + compare_id + "</th></tr>";
+      rows = table;
+      length = 15;
+      if (suite_data.length < length) length = suite_data.length;
+      for(var i = 0; i < length; i++) {
+        console.log("suite_data", suite_data[i], "compare_data", compare_data[i]);
+        row = "<tr><td>" + suite_data[i][_data[_type][0]] + "</td><td>" + suite_data[i][_data[_type][1]] + "</td><td>" + compare_data[i][_data[_type][1]] + "</td></tr>";
+        rows += row;
+      }
+      rows += "</table>"
+
+      document.getElementById(id).innerHTML = rows;
+      console.log(rows);
+    }
+
+    function compare_table_day(_type) {
+      console.log("In compare_table_day", _type);
+
+      var suite_id = document.getElementById("suite_id").value;
+      var compare_id = document.getElementById("compare_id").value;
+
+
+      _has = {
+        'compare_id' : {
+        'malware'   : has(data_day_malw, {'suite_id' : compare_id}),
+        'infection' : has(data_day_inf, {'suite_id' : compare_id}),
+        'signature' : has(data_day_sign, {'suite_id' : compare_id})
+        },
+        'suite_id' : {
+        'malware'   : has(data_day_malw, {'suite_id' : suite_id}),
+        'infection' : has(data_day_inf, {'suite_id' : suite_id}),
+        'signature' : has(data_day_sign, {'suite_id' : suite_id})
+        }
+      };
+
+      _data = {
+        'compare_id' : {
+        'malware'   : return_data(data_day_malw, compare_id),
+        'infection' : return_data(data_day_inf, compare_id),
+        'signature' : return_data(data_day_sign, compare_id)
+        },
+        'suite_id' : {
+        'malware'   : return_data(data_day_malw, suite_id),
+        'infection' : return_data(data_day_inf, suite_id),
+        'signature' : return_data(data_day_sign, suite_id)
+        }
+      };
+
+      _store_data = {
+        'malware'   : make_data_day_malware,
+        'signature' : make_data_day_signature,
+        'infection' : make_data_day_infection
+      };
+
+      id = {
+        'malware'   : 'bar',
+        'signature'  : 'pie',
+        'infection'  : 'pie_infection'
+      };
+
+      suite_data = _data.suite_id[_type];
+      compare_data = _data.compare_id[_type];
+
+      if (!_has.compare_id[_type]) {
+        load_data(_type, 'day', compare_id);
+        compare_data = _data.compare_id[_type];
+      }
+      if (!_has.suite_id[_type]) {
+        load_data(_type, 'day', suite_id);
+        suite_data = _data.sutie_id[_type];
+      }
+
+      compare_table(suite_data, compare_data, id[_type], _type);
+
+    }
+
+    function compare_table_week(_type) {
+      console.log("In compare_table_week", _type);
+      var suite_id = document.getElementById("suite_id").value;
+      var compare_id = document.getElementById("compare_id").value;
+
+
+      _has = {
+        'compare_id' : {
+        'malware'   : has(data_week_malw, {'suite_id' : compare_id}),
+        'infection' : has(data_week_inf, {'suite_id' : compare_id}),
+        'signature' : has(data_week_sign, {'suite_id' : compare_id})
+        },
+        'suite_id' : {
+        'malware'   : has(data_week_malw, {'suite_id' : suite_id}),
+        'infection' : has(data_week_inf, {'suite_id' : suite_id}),
+        'signature' : has(data_week_sign, {'suite_id' : suite_id})
+        }
+      };
+
+      _data = {
+        'compare_id' : {
+        'malware'   : return_data(data_week_malw, compare_id),
+        'infection' : return_data(data_week_inf, compare_id),
+        'signature' : return_data(data_week_sign, compare_id)
+        },
+        'suite_id' : {
+        'malware'   : return_data(data_week_malw, suite_id),
+        'infection' : return_data(data_week_inf, suite_id),
+        'signature' : return_data(data_week_sign, suite_id)
+        }
+      };
+
+      _store_data = {
+        'malware'   : make_data_week_malware,
+        'signature' : make_data_week_signature,
+        'infection' : make_data_week_infection
+      };
+
+      id = {
+        'malware'   : 'bar',
+        'signature'  : 'pie',
+        'infection'  : 'pie_infection'
+      };
+
+      suite_data = _data.suite_id[_type];
+      compare_data = _data.compare_id[_type];
+
+      if (!_has.compare_id[_type]) {
+        load_data(_type, 'day', compare_id);
+        compare_data = _data.compare_id[_type];
+      }
+      if (!_has.suite_id[_type]) {
+        load_data(_type, 'day', suite_id);
+        suite_data = _data.sutie_id[_type];
+      }
+
+      compare_table(suite_data, compare_data, id[_type], _type);
+    }
+
+    function compare_table_month(_type) {
+      console.log("In compare_table_month", _type);
+      var suite_id = document.getElementById("suite_id").value;
+      var compare_id = document.getElementById("compare_id").value;
+
+
+      _has = {
+        'compare_id' : {
+        'malware'   : has(data_month_malw, {'suite_id' : compare_id}),
+        'infection' : has(data_month_inf, {'suite_id' : compare_id}),
+        'signature' : has(data_month_sign, {'suite_id' : compare_id})
+        },
+        'suite_id' : {
+        'malware'   : has(data_month_malw, {'suite_id' : suite_id}),
+        'infection' : has(data_month_inf, {'suite_id' : suite_id}),
+        'signature' : has(data_month_sign, {'suite_id' : suite_id})
+        }
+      };
+
+      _data = {
+        'compare_id' : {
+        'malware'   : return_data(data_month_malw, compare_id),
+        'infection' : return_data(data_month_inf, compare_id),
+        'signature' : return_data(data_month_sign, compare_id)
+        },
+        'suite_id' : {
+        'malware'   : return_data(data_month_malw, suite_id),
+        'infection' : return_data(data_month_inf, suite_id),
+        'signature' : return_data(data_month_sign, suite_id)
+        }
+      };
+
+      _store_data = {
+        'malware'   : make_data_month_malware,
+        'signature' : make_data_month_signature,
+        'infection' : make_data_month_infection
+      };
+
+      id = {
+        'malware'   : 'bar',
+        'signature'  : 'pie',
+        'infection'  : 'pie_infection'
+      };
+
+      suite_data = _data.suite_id[_type];
+      compare_data = _data.compare_id[_type];
+
+      if (!_has.compare_id[_type]) {
+        load_data(_type, 'day', compare_id);
+        compare_data = _data.compare_id[_type];
+      }
+      if (!_has.suite_id[_type]) {
+        load_data(_type, 'day', suite_id);
+        suite_data = _data.sutie_id[_type];
+      }
+
+      compare_table(suite_data, compare_data, id[_type], _type);
+    }
+
+    function process_table(){
+      console.log("display table clicked");
+      var checkbox = document.getElementById("check_box").checked;
+      var compare_id = document.getElementById("compare_id").value;
+      // var suite_id = document.getElementById("suite_id").value;
+      var fil_sign = document.getElementById("filter_signature").innerHTML;
+      var fil_inf = document.getElementById("filter_infection").innerHTML;
+      var fil_malw = document.getElementById("filter_malware").innerHTML;
+      var result = {
+        'compare' : {
+          'Filter By Last Day'  : compare_table_day,
+          'Filter By Last Week' : compare_table_week,
+          'Filter By Last Month': compare_table_month 
+        },
+        'show' : {
+          'Filter By Last Day'  : show_table_day,
+          'Filter By Last Week' : show_table_week,
+          'Filter By Last Month': show_table_month
+        }
+      }
+
+      if (!Boolean(compare_id) || !Boolean(checkbox)) {
+        result.show[fil_sign]('signature');
+        result.show[fil_inf]('infection');
+        result.show[fil_malw]('malware');
+      }
+      else {
+        result.compare[fil_sign]('signature');
+        result.compare[fil_inf]('infection');
+        result.compare[fil_malw]('malware');
+      }
+    };
+
+    function process_chart() {
+      var checkbox = document.getElementById("check_box").checked;
+      var compare_id = document.getElementById("compare_id").value;
+      var suite_id = document.getElementById("suite_id").value;
+      var fil_sign = document.getElementById("filter_signature").innerHTML;
+      var fil_inf = document.getElementById('filter_infection').innerHTML;
+      var fil_malw = document.getElementById('filter_malware').innerHTML;
+      var result = {
+        'compare' : {
+          'Filter By Last Day' : compare_day,
+          'Filter By Last Week' : compare_week,
+          'Filter By Last Month' : compare_month
+        },
+        'get_data' : {
+          'Filter By Last Day' : get_data_by_day,
+          'Filter By Last Week' : get_data_by_week,
+          'Filter By Last Month' : get_data_by_month
+        }
+      }
+
+      if (Boolean(checkbox) && Boolean(compare_id)) {
+        result.compare[fil_sign]('signature');
+        result.compare[fil_inf]('infection');
+        result.compare[fil_malw]('malware');
+      }
+      else {
+        result.get_data[fil_sign]('signature');
+        result.get_data[fil_inf]('infection');
+        result.get_data[fil_malw]('malware');
+      }
+    }
+  		</script>
+
+
+  		<!-- Javascript to Handle all the event ends here -->
+
+
+	</head>
+	<body onload="display_data_onload()">
+		<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Malware Analytics</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li> -->
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filter By <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a onclick="display_data_submit()">Day</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a onclick="filter_data_by_week()">Week</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a onclick="filter_data_by_month()">Month</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav">
+        <!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li> -->
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Display <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a id="display_table" onclick="process_table()">Table</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a id="display_chart" onclick="process_chart()">Chart</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Enter Suite-ID" id="suite_id" value="110">
+        </div>
+        <button type="button" class="btn btn-default" onClick="display_data_submit()">Submit</button>
+        <input type="text" class="form-control" placeholder="Compare-With" id="compare_id">
+        <div class="checkbox">
+        <input type="checkbox" value="" id="check_box">
+        </div>
+        <button type="button" class="btn btn-default" id="compare_ids">Compare</button>
+      </form>
+      <!-- <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+      </ul> -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+	<div class="full">
+		<div class="line">
+			<div class="col-md6 quad" border="thin gray">
+			<div class="page-header">
+				<div class="btn-group" style="margin-left:20px;margin-bottom:-5px">
+  				<button type="button" class="btn btn-primary" id="filter_signature">Top 5 Signatures Filter By Last</button>
+  				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    			<span class="caret"></span>
+  				</button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a onClick="get_data_by_day('signature')">Day</a></li>
+    <li><a onClick="get_data_by_week('signature')">Week</a></li>
+    <li><a onClick="get_data_by_month('signature')">Month</a></li>
+  </ul>
+</div>
+</div>
+			<div class="panel panel-default"><div><div id="pie" width="700px" height="360px"></div></div></div>
+			</div>
+			<div class="col-md6 quad_r">
+      <!-- <div class="panel panel-default"> -->
+			<div class="page-header"><h4>SUITE ID INFORMATION</h4></div>
+      
+			<div style="margin-right:25px">
+<!-- 				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+ 				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div> -->
+				<div>
+          <table class="table table-striped table-bordered table-hover table-condensed" id="table">
+          <tr>
+            <th>SuiteID</th><th>Hostname</th><th>Product Release</th><th>Sec Version</th>
+          </tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td></tr>
+          </table>    
+        </div>
+				<!-- <div class="well well-sm"></div> -->
+<!--				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>				
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div>
+				<div class="well well-sm"></div> -->
+			</div>
+			</div>
+      </div>
+      <div class="line">
+      <div class="col-md6 quad" >
+      <div class="page-header">
+        <div class="btn-group" style="margin-left:20px;margin-bottom:-5px">
+          <button type="button" class="btn btn-primary" id="filter_infection">Filter By Last</button>
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+          </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a onClick="get_data_by_day('infection')">Day</a></li>
+    <li><a onClick="get_data_by_week('infection')">Week</a></li>
+    <li><a onClick="get_data_by_month('infection')">Month</a></li>
+  </ul>
+</div>
+</div>
+      <div class="panel panel-default"><div><div id="pie_infection" width="100%" height="360" style="margin-left:20px;margin-right:10px;"></div></div></div>
+      </div>
+      <div class="col-md6 quad">
+      <div class="page-header">
+        <div class="btn-group" style="margin-bottom:-5px">
+          <button type="button" class="btn btn-primary" id="filter_malware">Filter By Last</button>
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+          </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a onClick="get_data_by_day('malware')">Day</a></li>
+    <li><a onClick="get_data_by_week('malware')">Week</a></li>
+    <li><a onClick="get_data_by_month('malware')">Month</a></li>
+  </ul>
+</div>
+</div>
+      <!-- <span> -->
+      <div style="width:fit-content;height:fit-content;"><div class="panel panel-default"><div id="bar" width="700" height="415" style="margin-right:10px;"></div></div></div>
+      <!-- </span> -->
+      </div>
+      </div>
+      </div>
+      </div>
+	</body>
+</html>
